@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
     # key auth
     name = 'dictionary'
-    key_header = tools.get_creds('..\\private\\dict_creds.txt')
+    key_header = tools.get_creds('../private/dict_creds.txt')
     dictapi = WebApi(name, user_agent, **key_header)
     dictapi.authenticate(in_header=True)
     dictionary_url = 'https://od-api.oxforddictionaries.com/api/v2/entries/en-us/cromulent'
