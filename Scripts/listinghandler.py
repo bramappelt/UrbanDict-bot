@@ -9,7 +9,7 @@ import reprlib
 
 
 # logger setup
-confpath = os.path.abspath('..\\data\\botlog.conf')
+confpath = os.path.abspath('..//data//botlog.conf')
 logging.config.fileConfig(confpath, disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
@@ -96,7 +96,7 @@ if __name__ == '__main__':
     import json
     jsons = []
     for f in ['all_articles.json', 'tree1.json', 'tree2.json']:
-        f = '..\\data\\' + f
+        f = '../data/' + f
         with open(f, 'r') as fr:
             jsons.append(json.loads(fr.read()))
     articles, tree1, tree2 = jsons

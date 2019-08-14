@@ -8,7 +8,7 @@ import re
 
 
 # logger setup
-confpath = os.path.abspath('..\\data\\botlog.conf')
+confpath = os.path.abspath('../data/botlog.conf')
 logging.config.fileConfig(confpath, disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     # do some test queries
     q_test = []
-    with open('..\\data\\test_queries.txt', 'r') as fr:
+    with open('../data/test_queries.txt', 'r') as fr:
         for l in fr.readlines():
             q_test.append(l.split('#')[0])
 

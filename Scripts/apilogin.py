@@ -10,7 +10,7 @@ import requests
 
 
 # logger setup
-confpath = os.path.abspath('..\\data\\botlog.conf')
+confpath = os.path.abspath('../data/botlog.conf')
 logging.config.fileConfig(confpath, disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     token_url = 'https://www.reddit.com/api/v1/access_token'
     call_url = 'https://oauth.reddit.com/api/v1/me'
     useragent = 'Replybot by UrbanDict-bot (v1.0)'
-    logins = tools.get_creds('..\\private\\reddit_creds.txt')
+    logins = tools.get_creds('../private/reddit_creds.txt')
     token_data = {'grant_type': 'password',
                   'password': logins['password'],
                   'username': logins['username']}

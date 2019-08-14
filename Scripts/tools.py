@@ -7,7 +7,7 @@ import os.path
 
 
 # logger setup
-confpath = os.path.abspath('..\\data\\botlog.conf')
+confpath = os.path.abspath('../data/botlog.conf')
 logging.config.fileConfig(confpath, disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
