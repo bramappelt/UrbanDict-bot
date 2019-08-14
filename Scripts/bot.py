@@ -1,3 +1,6 @@
+''' The Urban Dictionary Bot '''
+
+
 import logging
 import logging.config
 import sqlite3
@@ -28,6 +31,9 @@ class UrbanDictBot:
 
         self.dbconnection = sqlite3.connect(database)
         self.initialize_db(database)
+
+    def __repr__(self):
+        return self.__name__
 
     def initialize_db(self, database):
         ''' connect to database creates one if not exists '''
@@ -126,18 +132,19 @@ class UrbanDictBot:
         if total_votes <= remove_threshold:
             parent_id = comment.parent_id
             self.remove_comment(reply_id, c_author, parent_id)
-            if self.verbose:
-                print('Comment {} ({}) removed'.format(reply_id, total_votes))
+
+            msg = 'Comment {} ({}) removed'.format(reply_id, total_votes)
+            logger.debug(msg)
 
         # skip if comment does not contain query
         elif not cparser.is_query():
-            if self.verbose:
-                print('No reply, comment {} is no query'.format(reply_id))
+            msg = 'No reply, comment {} is no query'.format(reply_id)
+            logger.debug(msg)
 
         # skip if comment is already replied to
         elif self.sql_execution(sql_select, (reply_id, )).fetchall():
-            if self.verbose:
-                print('Comment already replied to: {}'.format(reply_id))
+            msg = 'Comment already replied to: {}'.format(reply_id)
+            logger.debug(msg)
 
         # reply to comment or send private message if query fails
         else:
@@ -146,16 +153,17 @@ class UrbanDictBot:
             if send_reply:
                 self.reply_to_comment(reply_id, rtext, create_utc)
 
-                if self.verbose:
-                    print('Replied to {}, {}'.format(c_author, reply_id))
+                msg = 'Replied to {}, {}'.format(c_author, reply_id)
+                logger.debug(msg)
+
             else:
                 # !! only do this if not done yet FIX THIS
                 to = c_author
                 sub = comment.subreddit
                 self.send_private_message(reply_id, create_utc, rtext, to, sub)
 
-                if self.verbose:
-                    print('Send private message to {}'.format(c_author))
+                msg = 'Private message sent to {}'.format(c_author)
+                logger.debug(msg)
 
 
 if __name__ == '__main__':
@@ -186,8 +194,7 @@ if __name__ == '__main__':
 
     udbot = UrbanDictBot(api_connection=redditapi,
                          dict_connection=urbandictapi,
-                         database='..\\data\\botreplies.db',
-                         verbose=True)
+                         database='..\\data\\botreplies.db')
 
     # bot logic
     all_articles = udbot.get_articles()

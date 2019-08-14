@@ -1,3 +1,6 @@
+''' Parser that can recognize queries and retrieve responses '''
+
+
 import logging
 import logging.config
 import os.path

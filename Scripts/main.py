@@ -22,6 +22,8 @@ dict_name = 'urbandictapi'
 base_url = 'http://api.urbandictionary.com/v0/define?term='
 urbandictapi = apilogin.WebApi(dict_name, useragent, base_url=base_url)
 
+logger.info('Connection with {} is established'.format(urbandictapi))
+
 # redditapi oauth
 name = 'Reddit'
 token_url = 'https://www.reddit.com/api/v1/access_token'
@@ -38,25 +40,43 @@ redditapi = apilogin.TokenWebApi(name,
                                  token_data,
                                  **logins)
 
+logger.info('Login succesful, access token obtained for {}'.format(redditapi))
+
 # bot object
 udbot = UrbanDictBot(api_connection=redditapi,
                      dict_connection=urbandictapi,
-                     database='..\\data\\botreplies.db',
-                     verbose=True)
+                     database='..\\data\\botreplies.db')
+
+logger.info('{} created succesfully'.format(udbot))
 
 # bot logic
+try:
+    logger.info("Program's mainloop entered")
+    n_iter = 0
+    while True:
+        logger.debug('Iteration: {}'.format(n_iter))
+        time.sleep(5)
 
-while True:
-    time.sleep(5)
-    try:
-        all_articles = udbot.get_articles()
+        # select articles of given subreddit
+        all_articles = udbot.get_articles(subreddit='UrbanDict_Bot',
+                                          order='new', limit=5)
+
+        # get the comment trees associated with the selected articles
         for article in listinghandler.ChildScanner(all_articles):
             ctree = udbot.get_comments(article)
+
+            # loop over the individual comments
             for c in listinghandler.CommentScanner(ctree):
+                # apply replier function(reply/remove/private_message)
                 udbot.replier(c)
+        n_iter += 1
 
-    except Exception as e:
-        print(e)
+except KeyboardInterrupt:
+    logger.info("Program killed by KeyboardInterrupt")
 
-    finally:
-        udbot.dbconnection.close()
+except Exception as e:
+    logger.critical(e)
+
+finally:
+    udbot.dbconnection.close()
+    logger.info('Program is terminated, dbconnection succesfully closed')

@@ -1,3 +1,6 @@
+''' Provides classes for (un)authorized/reddit oauth api logins '''
+
+
 import logging
 import logging.config
 import os.path
@@ -13,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class WebApi(requests.Session):
+    ''' (un)authorized web api registation '''
     def __init__(self, name, user_agent, **kwargs):
         super().__init__()
         for key, value in kwargs.items():
@@ -28,6 +32,7 @@ class WebApi(requests.Session):
         return 'ApiRegister({})'.format(self.name)
 
     def authenticate(self, in_header=False):
+        ''' passing authentication data in header/session's auth attr '''
         if in_header:
             header = {'app_id': self.app_id, 'app_key': self.app_key}
             self.headers.update(header)
@@ -36,6 +41,7 @@ class WebApi(requests.Session):
 
 
 class TokenWebApi(WebApi):
+    ''' reddit's oauth login helper '''
     def __init__(self, name, user_agent, token_url, token_data, **kwargs):
         super().__init__(name, user_agent, **kwargs)
         self.token_url = token_url
@@ -45,6 +51,7 @@ class TokenWebApi(WebApi):
         self.request = self.refresh_token(self.request)
 
     def get_access_token(self, token_url=None, token_data=None):
+        ''' updates the session's header with an access token '''
         if not token_url:
             token_url = self.token_url
 
@@ -59,6 +66,7 @@ class TokenWebApi(WebApi):
         self.auth = ()
 
     def refresh_token(self, request_function):
+        ''' refresh access token if expired during request function'''
         def wrapper(*args, **kwargs):
             response = request_function(*args, **kwargs)
             if response.status_code == 403:
