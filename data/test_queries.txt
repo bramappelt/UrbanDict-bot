@@ -1,0 +1,14 @@
+$$:2:sound_url "pterodactyl"# empty list no sounds
+$$:2:author "pterodactyl"# OK
+$$::definition "pterodactyl"# OK
+$$:9999:author "yeet"# return top author
+$$:2:thumbs_up "cromulent"# return integer
+$$::current_vote "pterodactyl"# '' empty sting
+$$:2:permalink "cromulent"# just a link
+$$:2:sound_urls "cromulent"# list with urls
+$$:2:thumbs_up "ertyuiuytredfghgf"# not existent (message?)
+$$::thumbs_up "703"# just the top def
+$$:1:thumbs_up "703"# just the top def
+$$:0:thumbs_up "703"# just the top def
+$$:-2:thumbs_up "703"# no matches
+$$::thumbs-up "703"# nothing invalid query

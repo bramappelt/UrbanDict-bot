@@ -1,4 +1,13 @@
+import logging
+import logging.config
+import os.path
 import re
+
+
+# logger setup
+confpath = os.path.abspath('..\\data\\botlog.conf')
+logging.config.fileConfig(confpath, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 
 def urbandict_response(number, action, word, data):
@@ -77,6 +86,7 @@ class CommentParser:
 
         # apply query arguments to obtain data from the response json
         reply, text = urbandict_response(number, action, word, response_json)
+        logger.debug('urbandict_response succesfully called')
         return reply, text
 
 

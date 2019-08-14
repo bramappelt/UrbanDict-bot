@@ -1,5 +1,15 @@
+import logging
+import logging.config
+import os.path
+
 from warnings import warn
 import requests
+
+
+# logger setup
+confpath = os.path.abspath('..\\data\\botlog.conf')
+logging.config.fileConfig(confpath, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 
 class WebApi(requests.Session):

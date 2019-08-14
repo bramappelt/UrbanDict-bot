@@ -1,9 +1,19 @@
 import time
+import logging
+import logging.config
+import os.path
 
 import tools
 import apilogin
 import listinghandler
 from bot import UrbanDictBot
+
+
+# logger setup
+confpath = os.path.abspath('..\\data\\botlog.conf')
+logging.config.fileConfig(confpath, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
+
 
 useragent = 'Replybot by UrbanDict-bot (v1.0)'
 

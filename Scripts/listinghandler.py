@@ -1,8 +1,17 @@
 ''' Module for converting reddit api listing types to python objects '''
 
+import logging
+import logging.config
+import os.path
 
 import itertools
 import reprlib
+
+
+# logger setup
+confpath = os.path.abspath('..\\data\\botlog.conf')
+logging.config.fileConfig(confpath, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 
 class Thread:

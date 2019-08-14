@@ -1,9 +1,17 @@
-# import logging
+import logging
+import logging.config
 import sqlite3
 import pickle
+import os.path
 
 import parse
 import listinghandler
+
+
+# logger setup
+confpath = os.path.abspath('..\\data\\botlog.conf')
+logging.config.fileConfig(confpath, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 
 class UrbanDictBot:
@@ -45,20 +53,20 @@ class UrbanDictBot:
             return result[0]
         return result
 
-    def get_articles(self, subreddit='UrbanDict_Bot', order='new'):
+    def get_articles(self, subreddit='UrbanDict_Bot', order='new', **kwargs):
         ''' Provides thread with articles from given query '''
         url = '{}r/{}/{}'.format(self.reddit_base_url, subreddit, order)
-        response = self.api_connection.request('get', url)
+        response = self.api_connection.request('get', url, params=kwargs)
         articles = response.json()
         return listinghandler.Thread(articles)
 
-    def get_comments(self, article_thread):
+    def get_comments(self, article_thread, **kwargs):
         ''' provides a commenttree '''
         subname = article_thread.subreddit
         article_id = article_thread.id
         fmt_str = '{}r/{}/comments/{}'
         url = fmt_str.format(self.reddit_base_url, subname, article_id)
-        response = self.api_connection.request('get', url)
+        response = self.api_connection.request('get', url, params=kwargs)
         comments = response.json()[1]
         return listinghandler.Thread(comments)
 
