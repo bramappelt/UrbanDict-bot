@@ -14,6 +14,7 @@ confpath = os.path.abspath('..\\data\\botlog.conf')
 logging.config.fileConfig(confpath, disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
+logger.info('________________________ NEW RUN ________________________')
 
 useragent = 'Replybot by UrbanDict-bot (v1.0)'
 

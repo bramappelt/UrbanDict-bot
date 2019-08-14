@@ -33,7 +33,7 @@ class UrbanDictBot:
         self.initialize_db(database)
 
     def __repr__(self):
-        return self.__name__
+        return self.__class__.__name__
 
     def initialize_db(self, database):
         ''' connect to database creates one if not exists '''
