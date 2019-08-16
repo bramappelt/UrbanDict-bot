@@ -160,7 +160,6 @@ class UrbanDictBot:
             else:
                 sql_select = "SELECT id FROM private WHERE id=?"
                 if not self.sql_execution(sql_select, (reply_id,)).fetchall():
-                    # !! only do this if not done yet FIX THIS
                     to = c_author
                     sub = comment.subreddit
                     self.send_private_message(reply_id, create_utc,

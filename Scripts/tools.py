@@ -43,12 +43,6 @@ def responses_from_table(file, table, column='*'):
     return results
 
 
-class ResponseContent:
-    def __init__(self, response):
-        self.response = response
-        self.data = response.json()
-
-
 if __name__ == '__main__':
     replies_table = responses_from_table('../data/botreplies.db', 'replies')
     for reply in replies_table:
