@@ -4,9 +4,9 @@
 import logging
 import logging.config
 import os.path
-
 from warnings import warn
 import requests
+import time
 
 
 # logger setup
@@ -27,6 +27,12 @@ class WebApi(requests.Session):
         self.name = name
         self.user_agent = user_agent
         self.headers = {'User-Agent': user_agent}
+        self.request_rates = {'x-ratelimit-remaining': 100,
+                              'x-ratelimit-reset': 100,
+                              'x-ratelimit-used': 0}
+
+        # monkey patched Session's request method
+        self.request = self.rate_limiter(self.request)
 
     def __repr__(self):
         return 'ApiRegister({})'.format(self.name)
@@ -38,6 +44,25 @@ class WebApi(requests.Session):
             self.headers.update(header)
         else:
             self.auth = (self.app_id, self.app_key)
+
+    def rate_limiter(self, request_function, buffer=10):
+        ''' Prevent exceeding the maximum request rate '''
+        def wrapper(*args, **kwargs):
+            if hasattr(self, 'request_frequency'):
+                time.sleep(self.request_frequency)
+
+            remaining = self.request_rates['x-ratelimit-remaining']
+            if remaining < buffer:
+                time.sleep(self.request_rates['x-ratelimit-reset'])
+                msg = 'Sleeping for {} seconds to prevent request exceedence'
+                logger.info(msg.format(remaining))
+
+            response = request_function(*args, **kwargs)
+            header = response.headers
+            intersect = header.keys() & self.request_rates.keys()
+            self.request_rates.update({k: float(header[k]) for k in intersect})
+            return response
+        return wrapper
 
 
 class TokenWebApi(WebApi):
@@ -108,6 +133,7 @@ if __name__ == '__main__':
                   'password': logins['password'],
                   'username': logins['username']}
 
-    reddapi = TokenWebApi(name, useragent, token_url, token_data, **logins)
+    reddapi = TokenWebApi(name, useragent, token_url, token_data,
+                          request_frequency=2.5, **logins)
     response3 = reddapi.request('get', call_url)
     print('oauth:', response3.status_code)

@@ -39,6 +39,7 @@ redditapi = apilogin.TokenWebApi(name,
                                  useragent,
                                  token_url,
                                  token_data,
+                                 request_frequency=2.5,
                                  **logins)
 
 logger.info('Login succesful, access token obtained for {}'.format(redditapi))

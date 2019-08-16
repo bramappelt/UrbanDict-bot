@@ -41,7 +41,7 @@ class UrbanDictBot:
                          created_utc text, resp_obj blob, status text)'
         private_table = 'CREATE TABLE IF NOT EXISTS private (id text, \
                          created_utc text, message text, to_redditor text, \
-                         sub text)'
+                         sub text, resp_obj blob)'
         self.sql_execution(sql_stmt=[replies_table, private_table])
 
     def sql_execution(self, sql_stmt, values=()):
@@ -90,18 +90,19 @@ class UrbanDictBot:
         self.sql_execution(sql_insert, sql_values)
 
     def send_private_message(self, name, created_utc, msg, to, sub):
-        # url = '{}api/compose'.format(self.reddit_base_url)
-        # subject = 'Automatic UrbanDict-Bot reply'
-        # payload = {'api_type': 'json', 'subject': subject,
-        #            'text': msg, 'to': to, 'from_sr': sub}
+        url = '{}api/compose'.format(self.reddit_base_url)
+        subject = 'Automatic UrbanDict-Bot reply'
+        payload = {'api_type': 'json', 'subject': subject,
+                   'text': msg, 'to': to, 'from_sr': sub}
 
         # need more karma for this
-        # response = self.api_connection.request('post', url, params=payload)
+        response = self.api_connection.request('post', url, params=payload)
+        serialized_response = pickle.dumps(response)
 
         # save private message in database
-        sql_insert = 'INSERT INTO private(id, created_utc, message, to_redditor, sub) \
-                      VALUES (?, ?, ?, ?, ?)'
-        values = (name, created_utc, msg, to, sub)
+        sql_insert = 'INSERT INTO private(id, created_utc, message, to_redditor, \
+                      sub, resp_obj) VALUES (?, ?, ?, ?, ?, ?)'
+        values = (name, created_utc, msg, to, sub, serialized_response)
         self.sql_execution(sql_insert, values)
 
     def remove_comment(self, name, author, parent_id):
@@ -118,7 +119,7 @@ class UrbanDictBot:
             values = (serialized_response, status, parent_id)
             self.sql_execution(sql_update, values)
 
-    def replier(self, comment, remove_threshold=0):
+    def replier(self, comment, remove_threshold=-5):
         ''' replies to a new comment '''
         text = comment.body
         reply_id = comment.name
@@ -157,13 +158,19 @@ class UrbanDictBot:
                 logger.debug(msg)
 
             else:
-                # !! only do this if not done yet FIX THIS
-                to = c_author
-                sub = comment.subreddit
-                self.send_private_message(reply_id, create_utc, rtext, to, sub)
+                sql_select = "SELECT id FROM private WHERE id=?"
+                if not self.sql_execution(sql_select, (reply_id,)).fetchall():
+                    # !! only do this if not done yet FIX THIS
+                    to = c_author
+                    sub = comment.subreddit
+                    self.send_private_message(reply_id, create_utc,
+                                              rtext, to, sub)
 
-                msg = 'Private message sent to {}'.format(c_author)
-                logger.debug(msg)
+                    msg = 'Private message sent to {}'.format(c_author)
+                    logger.debug(msg)
+                else:
+                    msg = 'Private message already sent to {}'.format(c_author)
+                    logger.debug(msg)
 
 
 if __name__ == '__main__':
@@ -190,6 +197,7 @@ if __name__ == '__main__':
                                      useragent,
                                      token_url,
                                      token_data,
+                                     request_frequency=2.5,
                                      **logins)
 
     udbot = UrbanDictBot(api_connection=redditapi,
