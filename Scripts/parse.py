@@ -34,6 +34,9 @@ def urbandict_response(number, action, word, data):
         # check if action field exists
         try:
             message = data[action]
+            # get first element if return type is list
+            if isinstance(message, list) and message:
+                message = message[0]
         except KeyError:
             fmt_str = '({}) Invalid action argument: {}'
             message = fmt_str.format(number, action)

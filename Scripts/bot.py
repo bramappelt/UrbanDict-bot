@@ -121,7 +121,8 @@ class UrbanDictBot:
 
     def replier(self, comment, remove_threshold=-5):
         ''' replies to a new comment '''
-        text = comment.body
+        # reddit adds backslash before hyphens and underscores
+        text = comment.body.replace('\\', '')
         reply_id = comment.name
         c_author = comment.author
         cparser = parse.CommentParser(text,
