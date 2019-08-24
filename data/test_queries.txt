@@ -12,3 +12,8 @@ $$:1:thumbs_up "703"# just the top def
 $$:0:thumbs_up "703"# just the top def
 $$:-2:thumbs_up "703"# no matches
 $$::thumbs-up "703"# nothing invalid query
+$$::written_on 'cromulent'
+$$::thumbs_down 'cromulent'
+$$::thumbs_up 'cromulent'
+$$::sound_urls 'cromulent'
+$$::current_vote 'cromulent'
