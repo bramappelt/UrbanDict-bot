@@ -114,7 +114,9 @@ if __name__ == '__main__':
     response = apireg.request(method='get', url=urbandict_api_url)
     print('no auth:', response.status_code)
 
-    # key auth
+    # key auth (for this a public:privite- key combination is needed)
+    # not relevant for the bot, just an example of a different authentication
+    '''
     name = 'dictionary'
     key_header = tools.get_creds('../private/dict_creds.txt')
     dictapi = WebApi(name, user_agent, **key_header)
@@ -122,6 +124,7 @@ if __name__ == '__main__':
     dictionary_url = 'https://od-api.oxforddictionaries.com/api/v2/entries/en-us/cromulent'
     response2 = dictapi.request(method='get', url=dictionary_url)
     print('key auth:', response2.status_code)
+    '''
 
     # redditapi oauth
     name = 'Reddit'

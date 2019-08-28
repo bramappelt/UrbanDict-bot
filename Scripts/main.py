@@ -85,9 +85,9 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--sub', default='UrbanDict_Bot',
-                        help='Select subreddit to monitor')
+                        help='select subreddit to monitor')
     parser.add_argument('-l', '--limit', default=5,
-                        help='Number of post to select')
+                        help='number of post to select')
     parser.add_argument('-o', '--order', default='new',
                         help='post sort order')
     args = parser.parse_args()
