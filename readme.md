@@ -13,7 +13,7 @@
 
 The goal of this project was to build a reddit bot without making use of the PRAW module. In `main.py` a single subreddit is monitored for specific comments. The bot will reply to these comments if they match a certain query. You can create your own `main.py` script to fulfil your needs, e.g. monitoring multiple subreddits.
 
-![](./img/yeet.png)
+![](https://github.com/bramappelt/UrbanDict-bot/blob/master/img/yeet.PNG)
 
 ## Usages <a name="par1"></a>
 
@@ -21,13 +21,13 @@ First, the bot needs a setup. For every user of the bot a reddit account is need
 
 - Assuming you have a reddit account, login and visit https://old.reddit.com/prefs/apps/. Here, you can create an app that provides you your app id and key. Choose type `script` and at least add values to the `name` and `redirect uri` fields. Thereafter, click `create app`. See the image below.
 
-![](./img/script_app.png)
+![](https://github.com/bramappelt/UrbanDict-bot/blob/master/img/script_app.PNG)
 
-- Create a file called `reddit_creds.txt` and populate it as follows:
-username=\<yourredditusername\>
-password=\<yourredditpassword\>
-app_id=\<yourappidd\>
-app_key=\<yourappkey\>
+- Create a file called `reddit_creds.txt` and populate it as follows:\s\s
+username=\<yourredditusername\>\s\s
+password=\<yourredditpassword\>\s\s
+app_id=\<yourappidd\>\s\s
+app_key=\<yourappkey\>\s\s
 
 ### Bot Setup <a name='subpar1'></a>
 
@@ -47,7 +47,7 @@ The bot can be run from the command line.
 - _It is okay to use the default subreddit for your testing, however you can always create your own!_
 
 Extra info on the available arguments:
-![](./img/cmd_args.png)
+![](https://github.com/bramappelt/UrbanDict-bot/blob/master/img/cmd_args.PNG)
 
 - Log files are created in `UrbanDict-bot/data/`
 
@@ -72,4 +72,4 @@ Some example queries are:
 -   \$$:4:current_vote 'yeet'
 -   \$$::example 'yeet'
 
-![](./img/cromulent_example.png)
+![](https://github.com/bramappelt/UrbanDict-bot/blob/master/img/cromulent_example.PNG)
