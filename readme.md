@@ -17,17 +17,18 @@ The goal of this project was to build a reddit bot without making use of the PRA
 
 ## Usages <a name="par1"></a>
 
-First, the bot needs a setup. For every user of the bot a reddit account is needed. Make sure that your account is more than 3 months old and has some positive post and comment karma. This will prevent you from having a 9 minutes, instead of 2 seconds, interval post rate.
+First, the bot needs a setup. For every bot a reddit account is needed. Make sure that your account is more than 3 months old and has some positive post and comment karma. This will prevent you from having a 9 minutes, instead of 2 seconds, interval post rate.
 
 - Assuming you have a reddit account, login and visit https://old.reddit.com/prefs/apps/. Here, you can create an app that provides you your app id and key. Choose type `script` and at least add values to the `name` and `redirect uri` fields. Thereafter, click `create app`. See the image below.
 
 ![](https://github.com/bramappelt/UrbanDict-bot/blob/master/img/script_app.PNG)
 
-- Create a file called `reddit_creds.txt` and populate it as follows:\s\s
-username=\<yourredditusername\>\s\s
-password=\<yourredditpassword\>\s\s
-app_id=\<yourappidd\>\s\s
-app_key=\<yourappkey\>\s\s
+- Create a file called `reddit_creds.txt` and populate it as follows:
+
+        username=<yourredditusername>
+        password=<yourredditpassword>
+        app_id=<yourappidd>
+        app_key=<yourappkey>
 
 ### Bot Setup <a name='subpar1'></a>
 
