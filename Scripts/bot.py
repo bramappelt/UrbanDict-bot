@@ -136,7 +136,7 @@ class UrbanDictBot:
             self.remove_comment(reply_id, c_author, parent_id)
 
             msg = 'Comment {} ({}) removed'.format(reply_id, total_votes)
-            logger.debug(msg)
+            logger.info(msg)
 
         # skip if comment does not contain query
         elif not cparser.is_query():
@@ -156,7 +156,7 @@ class UrbanDictBot:
                 self.reply_to_comment(reply_id, rtext, create_utc)
 
                 msg = 'Replied to {}, {}'.format(c_author, reply_id)
-                logger.debug(msg)
+                logger.info(msg)
 
             else:
                 sql_select = "SELECT id FROM private WHERE id=?"
@@ -167,7 +167,7 @@ class UrbanDictBot:
                                               rtext, to, sub)
 
                     msg = 'Private message sent to {}'.format(c_author)
-                    logger.debug(msg)
+                    logger.info(msg)
                 else:
                     msg = 'Private message already sent to {}'.format(c_author)
                     logger.debug(msg)
