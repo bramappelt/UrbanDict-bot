@@ -59,7 +59,7 @@ The bot will only reply to comments that match a certain query. This query shoul
 
 - **\<number>**: A positive integer that reflects the definition rank (when omitted the top definition is selected)
 - **\<action>**: definition, permalink, thumbs_up,                            sound_urls, author, word, defid,                             current_vote, written_on, example, thumbs_down
-- **\<word>**: The word you want the urban dictionary information from (do not forget the quotes!)
+- **\<word>**: The word you want the Urban Dictionary information from (do not forget the quotes!)
 
 ## Examples <a name="par2"></a>
 

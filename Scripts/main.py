@@ -1,7 +1,13 @@
+import os
+
+# make sure the file can be run from every location
+filepath = os.path.split(os.path.abspath(__file__))[0]
+if filepath != os.getcwd():
+    os.chdir(filepath)
+
 import time
 import logging
 import logging.config
-import os.path
 
 import tools
 import apilogin
